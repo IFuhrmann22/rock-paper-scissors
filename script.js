@@ -1,59 +1,47 @@
-const choices = ["paper", "rock", "scissors"];
+const playerSelection = document.querySelector('#playerSelection');
+const computerSelection = document.querySelector('#computerSelection');
+const resultText = document.querySelector('#resultText');
+const choiceButtons = document.querySelectorAll('.Choicebtn');
 
-function getComputerChoice () {
-	return choices[Math.floor(Math.random() * choices.length)];
+let player;
+let computer;
+let result;
+
+choiceButtons.forEach(button => button.addEventListener("click", () => {
+  player = button.textContent;
+  computerTurn ();
+  playerSelection.textContent = `Player: ${player}`;
+  computerSelection.textContent = `Computer: ${computer}`;
+  resultText.textContent = checkWinner();
+}));
+
+function computerTurn(){
+  const randNum = Math.floor(Math.random() * 3) + 1;
+
+    switch(randNum){
+      case 1:
+        computer = "Rock";
+        break;
+      case 2:
+        computer = "Paper";
+        break;
+      case 3:
+        computer = "Scissors";
+        break;
+    }
 }
 
-let playerSelection = prompt("Rock Paper or Scissors?").toLowerCase();
-const computerSelection = getComputerChoice();
-
-function playRound(playerSelection, computerSelection) {
-	let computerScore = 0;
-  let playerScore = 0;
-	if (playerSelection == computerSelection) {
-		return ("It's a tie!");
-	}
-	if (computerSelection == "rock") {
-		if (playerSelection == "scissors") {
-			return ("Computer wins!");
-			computerScore++;
-		}
-		else {
-			return ("Player wins!")
-			playerScore++;
-		}
-	}
-	if (computerSelection == "paper") {
-		if (playerSelection == "rock") {
-			return ("Computer wins!");
-			computerScore++;
-		}
-		else {
-			return ("Player wins!");
-			playerScore++;
-		}
-	if (computerSelection == "scissors") {
-		if (playerSelection == "paper") {
-			return ("Computer wins!");
-			computerScore++;
-		}
-		else {
-			return ("Player wins!");
-			playerScore++;
-		}
-	}
+function checkWinner() {
+  if(player == computer){
+    return "Draw";
+  }
+  else if (computer == "Rock"){
+    return(player == "Paper") ? "You Win" : "You lose!"
+  }
+  else if (computer == "Paper"){
+    return(player == "Scissors") ? "You Win" : "You lose!"
+  }
+  else if (computer == "Scissors"){
+    return(player == "Rock") ? "You Win" : "You lose!"
+  }
 }
-}
-
-console.log("Player choice: " + playerSelection);
-console.log("Computer choice: " + computerSelection);
-console.log (playRound(playerSelection, computerSelection));
-
-// everything above running well. 
-// Function needs to loop 5x and count results
-
-// function games () {
-// 	for (let round = 0; round < 5; round++) {
-// 		playRound();
-// }
-// }
